@@ -1,0 +1,87 @@
+<% include ../partials/header %>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-3">
+            <p class="lead">YelpCamp</p>
+            <div class="list-group">
+                <li class="list-group-item active">Reviews</li>
+                <li class="list-group-item">Price</li>
+                <li class="list-group-item">Owner</li>
+            </div>
+            <div>
+                <iframe
+                  width= "100%"
+                  height="250"
+                  frameborder="0"
+                  style="border:0"
+                  scrolling="yes"
+                  src="https://www.google.com/maps/embed/v1/place?key=AIzaSyB7YAl4eWyxVCmdU0P0s5KWlem8TeU71Mc&q=<%= campground.address %><%= campground.cityState %>" allowfullscreen>
+                </iframe>
+                <div>
+                    <% if (weather == "Clear"){ %>
+                        <h3>Current Weather: <i class="wi wi-day-sunny"></i></h3>
+                    <% } else { %>
+                        <h3>Current Weather: <i class="wi wi-day-cloudy"></i></h3>
+                    <% } %>
+
+                </div>
+
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class="thumbnail">
+                <img class="img-responsive showImg" src="<%= campground.image %>">
+                <div class="caption-full">
+                    <h4 class="pull-right">$<%= campground.price %>/night</h4>
+                    <h4><a><%= campground.name %></a><span style="font-size: 0.8em;">  <em>submitted by <%= campground.author.username %></em></span></h4>
+                    <p><%= campground.description %></p>
+                    <div>
+                        <% if (currentUser && campground.author.id.equals(currentUser._id)){ %>
+                            <a href="/campgrounds/<%= campground._id %>/edit"><button class="btn btn-warning">Edit</button></a>
+                            <form style="display: inline;" action="/campgrounds/<%= campground._id %>?_method=DELETE" method="post">
+                                <button class="btn btn-danger">Delete</button>
+                            </form>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+            <div class="well">
+
+                <div class="text-right">
+                    <a class="pull-right" href="/campgrounds/<%= campground._id %>/comments/new"><button class="btn btn-success">Leave a review</button></a>
+                </div>
+                <h4>Reviews:</h4>
+                <div class="row">
+                    <div class="col-md-12">
+                        <hr>
+                    </div>
+                </div>
+
+                    <% campground.comments.forEach(function(comment){ %>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <p class="pull-right">10 days</p>
+                                <p><strong><%= comment.author.username %></strong></p>
+                                <p><%= comment.text %></p>
+                                <div>
+                                    <% if (currentUser && comment.author.id.equals(currentUser._id)){ %>
+                                        <a class="btn btn-xs btn-warning" href="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>/edit">Edit</a>
+                                        <form style="display: inline;" action="/campgrounds/<%= campground._id %>/comments/<%= comment._id %>?_method=DELETE" method="post">
+                                            <button class="btn btn-xs btn-danger">Delete</button>
+                                        </form>
+                                    <% } %>
+                                </div>
+                            </div>
+                        </div>
+                    <% }); %>
+            </div>
+        </div>
+
+
+    </div>
+    </div>
+</div>
+
+
+<% include ../partials/footer %>

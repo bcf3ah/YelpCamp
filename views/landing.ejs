@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>YelpCamp</title>
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" type="text/css" rel="stylesheet">
+        <link href="/stylesheets/landing.css" rel="stylesheet" type="text/css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" type="text/javascript" async></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.0.2/howler.min.js"></script>
+
+    </head>
+    <body>
+        <div class="container">
+            <% if(error && error.length>0){ %>
+            <div class="alert alert-danger">
+                <%= error %>
+            </div>
+            <% } else if(success && success.length > 0){ %>
+            <div class="alert alert-success">
+                <%= success %>
+            </div>
+            <% }; %>
+        </div>
+
+
+        <div id="landing-header">
+                <h1>Welcome to YelpCamp!</h1>
+                <a href="/campgrounds" class="btn btn-lg btn-success">View All Campgrounds</a>
+        </div>
+        <ul class="slideshow">
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+        </ul>
+
+        <script>
+
+            var sound = new Howl({
+            src: ['/11 The Lord Of The Rings (Howard Shore) - The Ring Goes South.mp3'],
+            loop: true
+            });
+
+            sound.once('load', function(){
+              sound.play();
+            });
+        </script>
+<% include partials/footer %>
